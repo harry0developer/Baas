@@ -1,0 +1,64 @@
+<ion-header >
+  <ion-navbar color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Jobs</ion-title>
+    <ion-buttons end> 
+      <button ion-button icon-only (click)="applyEmployeeFilter()">
+        <ion-icon name="settings"></ion-icon>
+      </button>  
+    </ion-buttons> 
+  </ion-navbar>
+  <ion-toolbar color="dark">
+    <ion-searchbar [(ngModel)]="searchTerm" placeholder="Search jobs..." [formControl]="searchControl" (ionInput)="onSearchInput()"></ion-searchbar>
+    <div *ngIf="searching" class="spinner-container">
+      <ion-spinner></ion-spinner>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Refresh jobs"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="job" *ngFor="let job of jobs">
+    <ion-list *ngIf="job" (click)="jobDetails(job)">
+      <ion-item>
+        <h2 class="title">{{job.title}}</h2>
+        <ion-thumbnail item-start>
+          <img src="assets/categories/{{job.category.toLowerCase()}}.svg">
+        </ion-thumbnail>
+        <p>
+          <i class="fa fa-map-marker" item-start></i>
+          {{job.address}}
+        </p>
+        <p text-wrap>
+          <i class="fa fa-tag" item-start></i>
+          {{job.type}} <!--|  {{job.salary == 'Neg' ? "Negotiable" : "R"+ job.salary}}  -->
+        </p> 
+      </ion-item>
+    </ion-list> 
+    <ion-list-header color="light">
+      <div item-start>
+        <i class="fa fa-calendar" item-start></i>
+        {{getMoment(job)}}
+      </div>
+      <div [hidden]="!job.distance" item-end>
+        <i class="fa fa-map-pin" item-start></i>
+        <!-- {{getDistance(job)}} --> {{job.distance}} KM away
+      </div> 
+    </ion-list-header>
+  </div>
+  <div *ngIf="!jobs || jobs.length < 1" class="no-match">
+    <ion-item text-wrap no-lines>
+      <h2>No jobs found matching this category</h2>
+    </ion-item>
+  </div>
+</ion-content>

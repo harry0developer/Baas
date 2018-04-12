@@ -1,0 +1,48 @@
+
+.ios, .md {
+  page-job-details{
+
+
+    ion-item.item{
+      margin: 5px 0;
+    }
+      
+    ion-badge.badge{
+      background-color: $primary;
+      padding: 5px;
+      margin: 2px;
+    }
+
+    .job ion-icon{
+      color: $primary
+    }
+
+    .banner{
+      text-align: center;
+      background-color: #fff;
+      height: 45%;
+      padding-top: 50px;
+      color: $secondary;
+    }
+    .banner img{
+      width: 20%;
+    }
+    .banner h2{
+      margin: 5px 0;
+      font-weight: bold;
+    }
+    .banner p{
+      margin: 0;
+    }
+
+    h2{
+      font-size: 1em !important;
+      display: block;
+    }
+
+    .info p{
+      font-size: 0.8em;
+    }
+
+  }
+}

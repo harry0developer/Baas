@@ -1,0 +1,12 @@
+page-signup {
+    @import '../../theme/form-style';
+    .item-label-floating .input-wrapper{
+        border-bottom: 2px solid;
+    }
+    .logo{
+        margin: 15% 0;
+    }
+    ion-footer button{
+        color: #fff !important;
+    }
+}

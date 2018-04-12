@@ -1,0 +1,56 @@
+page-jobs { 
+
+    .job{
+        margin: 10px;
+        i{
+            margin: 0 !important; 
+        } 
+        p{
+            font-size: 1em; 
+        }
+        .title {
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    .no-match{
+        margin: 10px;
+    }
+
+ 
+    ion-thumbnail img{
+        padding: 10%;
+    }
+
+    ion-list{
+        margin-bottom: 0 !important;
+    }
+
+    ion-label i{
+        color: $secondary !important;
+    }
+
+    ion-list-header.item{
+        background-color: $secondary;
+        color: #fff;
+    }
+    
+   ion-col i, ion-item i{
+       margin-right: 0 !important;
+   }
+
+
+   .button{
+        color: #fff !important;
+   }
+
+   .spinner-container {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        background:transparent !important;
+        color: #fff !important;
+    } 
+
+}

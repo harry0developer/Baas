@@ -1,0 +1,40 @@
+page-setup {
+    @import '../../theme/form-style';
+    
+    .home-icon {
+        margin-bottom: 20px;
+    }
+    .home-icon i{
+        font-size: 4em;
+    }
+
+    .but{
+        margin-top: 40px;
+    }
+
+    .paging{
+        margin: 20px 0;
+        font-size: 0.8em;
+    }
+    
+    .type h3{
+        font-size: 2em;
+    }
+    .type p{
+        font-size: 0.8em;
+    }
+
+    .or{
+        text-align: center;
+
+    }
+    .up{
+        height: 30px;
+        width: 2px;
+        background-color: $dark;
+        position: relative;
+        left: 50%;
+    }
+ 
+ 
+}

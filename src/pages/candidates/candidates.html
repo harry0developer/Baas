@@ -1,0 +1,53 @@
+<ion-header >
+  <ion-navbar color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Candiates</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="filterCandidates()">
+        <ion-icon name="settings"></ion-icon>
+      </button> 
+      <button ion-button icon-only (click)="postJob()">
+        <ion-icon name="create"></ion-icon>
+      </button> 
+    </ion-buttons> 
+  </ion-navbar>
+  <ion-toolbar color="dark">
+    <ion-searchbar [(ngModel)]="searchTerm" placeholder="Search users..." [formControl]="searchControl" (ionInput)="onSearchInput()"></ion-searchbar>
+    <div *ngIf="searching" class="spinner-container">
+      <ion-spinner></ion-spinner>
+    </div>
+  </ion-toolbar>
+ 
+</ion-header>
+
+<ion-content> 
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Refresh users"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-list class="main">
+    <ion-item class="user" *ngFor="let user of candidates" (click)="userDetails(user)">
+      <ion-avatar item-start>
+        <img src="http://placehold.it/100x100">
+      </ion-avatar>
+      <h2>{{user.firstname}} {{user.lastname}}</h2>
+      <p>
+        <i class="fa fa-briefcase" item-start></i>
+        {{user.title}}
+        <span [hidden]="!user.distance" class="distance" item-end>
+          <i class="fa fa-map-pin" item-start></i>
+          {{user.distance}}KM Away
+        </span>
+      </p> 
+    </ion-item>
+    <ion-item text-wrap *ngIf="!candidates || (candidates && candidates.length < 1)">
+      <p>No candidates matching that category.</p> 
+    </ion-item>
+  </ion-list>
+</ion-content>
