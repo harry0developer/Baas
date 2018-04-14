@@ -210,7 +210,7 @@ export class MyJobsPage {
   }
 
   shareJob(slider, job) {
-    this.dataProvider.shareActionSheet(job);
+    this.dataProvider.shareJobActionSheet(job, this.profile);
     this.closeSlide(slider);
   }
 

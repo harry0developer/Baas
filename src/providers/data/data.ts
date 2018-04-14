@@ -2,6 +2,7 @@ import { Headers, Http  } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { LoadingController, ToastController ,AlertController, ActionSheetController, Events} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import 'rxjs/add/operator/map';
 import * as moment from 'moment';
@@ -30,7 +31,8 @@ export class DataProvider {
   KM: number =  1.60934;
   location: any = {lat: "", lng:""};
   constructor(public http: Http, public loadingCtrl: LoadingController, public events: Events,
-    public alertCtrl: AlertController, public toastCtrl: ToastController, 
+    public alertCtrl: AlertController, public toastCtrl: ToastController, public socialSharing: SocialSharing,
+
     private actionSheetCtrl: ActionSheetController, private geolocation: Geolocation ) {
       this.usersData = null;
       this.users = null; 
@@ -54,7 +56,7 @@ export class DataProvider {
       this.http.post(apiUrl + 'getUsers', null ,{headers: headers})
         .map(res => res.json())
         .subscribe(data => {
-          this.users = data.data.filter(user => user.type == "Candidate");
+          this.users = data.data;
           resolve(this.users);
         });
     });
@@ -219,6 +221,7 @@ export class DataProvider {
  
   filterUsers(searchTerm){ 
     if(this.users){
+      this.users = this.users.filter(user => user.type === 'Candidate');
       let name: string;
       return this.users.filter((user) => {
         name = user.firstname+ " " +user.lastname;
@@ -288,28 +291,53 @@ export class DataProvider {
     console.log(job);
   }
 
+  private addToSharedJobs(job): any{
+    this.postData(job, "addToSharedJobs").then(res => {
+      console.log(res);
+      return res;
+    }).catch(err => {
+      console.log(err);
+      return err;
+    })
+  }
 
-  shareActionSheet(job) {
+  shareJobActionSheet(job, user){
+    let data = {
+      job_id_fk: job.job_id,
+      user_id_fk: user.user_id,
+      date_shared: this.getDate()
+    };
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Share this job',
+      title: 'Share this job via: ',
       buttons: [
         {
           text: 'Facebook',
           icon:'logo-facebook',
+          cssClass: 'icon-facebook',
           handler: () => {
-            console.log(job);
+            this.socialSharing.shareViaFacebook(job, "img.png", "www.job.co.za").then(res => {
+              this.addToSharedJobs(data);
+            }).catch(err => {
+              console.log(err);
+            })
           }
         },
         {
           text: 'Twitter',
           icon: 'logo-twitter',
+          cssClass: 'icon-twitter',
           handler: () => {
-            console.log(job);
+            this.socialSharing.shareViaTwitter(job, "img.png", "www.job.co.za").then(res => {
+              this.addToSharedJobs(data);
+            }).catch(err => {
+              console.log(err);
+            })
           }
         },
         {
           text: 'Email',
           icon: 'home',
+          cssClass: 'icon-email',
           handler: () => {
             console.log(job);
           }
@@ -318,12 +346,15 @@ export class DataProvider {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            this.socialSharing.shareViaEmail('Body', 'Subject', ['recipient@example.org']).then((res) => {
+              this.addToSharedJobs(data);
+            }).catch((err) => {
+              console.log(err);
+            });
           }
         }
       ]
     });
- 
     actionSheet.present();
   }
 

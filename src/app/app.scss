@@ -17,11 +17,7 @@
 //#009688
 @import '../theme/style';
 
-ion-item-divider.item.item-divider, ion-badge.badge{
-   background-color: $primary;
-   color: $white;
-}
-.con{
+.sidemenu {
     background-color: rgba(36, 36, 36, 0.99);
     text-align: center;
     p{
@@ -52,40 +48,21 @@ ion-item-divider.item.item-divider, ion-badge.badge{
     position: absolute;
     bottom: 10px;
 }
-
-@font-face{
-    font-family: SansCaption;
-    src: url('../assets/fonts/SansCaption.woff2') format('woff2');
-}
-
-*{
-    font-family: SansCaption;
-}
- 
-ion-content.content{
-    background-color: $primary;
-} 
-
-.toolbar-background{
-    background-color: $primary !important;
-    color: #fff !important;
-}
- 
 .profile{
-    margin: 10% 0;
-    img{
+  margin: 10% 0;
+  img{
 
-        border: 4px solid #fff;
-        border-radius: 100%;
-        width: 120px;
-        margin: 50px 60px 0 60px;
-    }
-    h2{
-        font-size: 1.2em;
-        color: $dark;
-    }
-    p{
-        font-size: 0.9em;
-        color: $dark;
-    }
+      border: 4px solid #fff;
+      border-radius: 100%;
+      width: 120px;
+      margin: 50px 60px 0 60px;
+  }
+  h2{
+      font-size: 1.2em;
+      color: $dark;
+  }
+  p{
+      font-size: 0.9em;
+      color: $dark;
+  }
 }

@@ -33,11 +33,13 @@
     </ion-item>
   </ion-list>
 
-  <div padding [hidden]="applied">
-    <button ion-button color="dark" block (click)="offerUserEmployment(user)">Offer Employement</button>
-  </div>
-  <div padding [hidden]="!applied">
-    <button ion-button color="dark" block (click)="confirmWithdrawAppointment(user)">Cancel Appointment</button>
+  <div *ngIf="user && user.type === 'Candidate'">
+    <div padding [hidden]="applied">
+      <button ion-button color="dark" block (click)="offerUserEmployment(user)">Offer Employement</button>
+    </div>
+    <div padding [hidden]="!applied">
+      <button ion-button color="dark" block (click)="confirmWithdrawAppointment(user)">Cancel Appointment</button>
+    </div>
   </div>
  
 </ion-content>

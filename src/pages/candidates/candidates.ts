@@ -46,14 +46,15 @@ export class CandidatesPage {
   ionViewDidLoad() {  
     this.profile = JSON.parse(localStorage.getItem('user')); 
 
-    this.dataProvider.loadUsers().then(res => {
-      this.candidates = res;
+    this.dataProvider.loadUsers().then(users => {
+      this.candidates = users.filter(user => user.type === 'Candidate');;
       this.tmpCandiates = this.dataProvider.sortByDistance(this.candidates);
     });
 
     this.events.subscribe('location:set', location => {
-      this.dataProvider.loadUsers().then(res => { 
-        let candidates = this.dataProvider.applyHaversine(res, location.lat, location.lng);
+      this.dataProvider.loadUsers().then(users => { 
+        let candidates = users.filter(user => user.type === 'Candidate');
+        this.candidates = this.dataProvider.applyHaversine(candidates, location.lat, location.lng);
         this.candidates = this.dataProvider.sortByDistance(candidates);
         this.tmpCandiates = this.candidates;
       })
@@ -127,7 +128,7 @@ export class CandidatesPage {
         this.candidates = this.applyFilter(filter);
       }else{ 
         this.dataProvider.loadUsers().then(users => {
-          this.candidates = users;
+          this.candidates = users.filter(user => user.type === 'Candidate');
         })
       }
     });

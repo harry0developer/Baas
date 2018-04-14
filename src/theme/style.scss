@@ -3,6 +3,18 @@ $secondary: #cea619;
 $dark: #333;
 $white: #fff;
 $grey: #ddd;
+$facebook: #3b5998;
+$twitter: #23a1f4;
+$email: #c71610;
+
+@font-face{
+    font-family: SansCaption;
+    src: url('../assets/fonts/SansCaption.woff2') format('woff2');
+}
+
+*{
+    font-family: SansCaption;
+}
 
 .item-inner, ion-item{
     border-bottom: none !important;
@@ -17,4 +29,34 @@ ion-item{
         font-size: 1em !important;
         display: inline-block;
     } 
+}
+
+.range-knob  {
+    background: $primary !important;
+}
+ 
+ion-content.content{
+    background-color: $primary;
+} 
+
+
+ion-item-divider.item.item-divider, ion-badge.badge{
+    background-color: $primary;
+    color: $white;
+ }
+
+.toolbar-background{
+    background-color: $primary !important;
+    color: #fff !important;
+}
+
+ 
+.action-sheet-button.icon-facebook{
+    color: $facebook !important;
+}
+.action-sheet-button.icon-twitter{
+  color: $twitter !important;
+}
+.action-sheet-button.icon-email{
+  color: $email !important;
 }

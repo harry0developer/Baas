@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
-
 import { DataProvider } from '../../providers/data/data';
 import { UserDetailsPage } from '../user-details/user-details';
-import * as moment from 'moment';
+
 @IonicPage()
 @Component({
   selector: 'page-appointments',
@@ -34,15 +33,19 @@ export class AppointmentsPage {
         }
       })
     }).then(() => {
-      console.log(this.myAppointments)
       this.dataProvider.loadUsers().then(res => {
-          this.mapUserWithAppointments(res, this.myAppointments);
+        this.mapUserWithAppointments(res, this.myAppointments);
       }).catch(err => {
         console.log(err);
       });
     })
     .catch(err => {
       console.log(err);
+    });
+
+    this.ionEvents.subscribe('appointments:updated', (res) => {
+      this.appointments = res;
+      console.log(res);
     });
 
   }

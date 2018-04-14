@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ActionSheetController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ActionSheetController } from 'ionic-angular';
 import * as moment from 'moment';
 import { DataProvider } from '../../providers/data/data';
-
-import { SocialSharing } from '@ionic-native/social-sharing';
 
 @IonicPage()
 @Component({
@@ -24,8 +22,8 @@ export class JobDetailsPage {
   countViews: number = 0;
   countShared: number = 0;
   countApplied: number;
-  constructor(public navCtrl: NavController, public ionEvent: Events,  public actionSheetCtrl: ActionSheetController,
-    public dataProvider: DataProvider, public navParams: NavParams, private socialSharing: SocialSharing) { 
+  constructor(public navCtrl: NavController, public ionEvent: Events, public actionSheetCtrl: ActionSheetController,
+    public dataProvider: DataProvider, public navParams: NavParams) { 
     this.profile = JSON.parse(localStorage.getItem("user"));
     this.applied = false;
   }
@@ -175,76 +173,9 @@ export class JobDetailsPage {
   }
   
 
-  addToSharedJobs(data){
-    this.dataProvider.postData(data, "addToSharedJobs").then(res => {
-      console.log(res);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
 
   getSkills(skills){
     return skills.split(',');
-  }
-
-  shareJobActionSheet(job){
-    let data = {
-      job_id_fk: job.job_id,
-      user_id_fk: this.profile.user_id,
-      date_shared: this.dataProvider.getDate()
-    };
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Share this job',
-      buttons: [
-        {
-          text: 'Facebook',
-          icon:'logo-facebook',
-          handler: () => {//
-            this.socialSharing.shareViaFacebook(job, "img.png", "www.job.co.za").then(res => {
-              console.log(res);
-              this.addToSharedJobs(data);
-              
-            }).catch(err => {
-              console.log(err);
-            })
-          }
-        },
-        {
-          text: 'Twitter',
-          icon: 'logo-twitter',
-          handler: () => {
-            this.socialSharing.shareViaTwitter(job, "img.png", "www.job.co.za").then(res => {
-              console.log(res);
-              this.addToSharedJobs(data);
-              
-            }).catch(err => {
-              console.log(err);
-            })
-          }
-        },
-        {
-          text: 'Email',
-          icon: 'home',
-          handler: () => {
-            console.log(job);
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            this.socialSharing.shareViaEmail('Body', 'Subject', ['recipient@example.org']).then((res) => {
-              console.log(res);
-              this.addToSharedJobs(data);
-              
-            }).catch((err) => {
-              console.log(err);
-            });
-          }
-        }
-      ]
-    });
-    actionSheet.present();
   }
 
   confirmWithdrawApplication(job) {
@@ -271,5 +202,9 @@ export class JobDetailsPage {
     actionSheet.present();
   }
  
+  shareJob(job) {
+    const state = this.dataProvider.shareJobActionSheet(job, this.profile);
+    console.log(state);
+  }
 
 }

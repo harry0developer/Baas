@@ -4,7 +4,7 @@
       Job Details
     </ion-title>
     <ion-buttons *ngIf="job" end>
-      <button ion-button icon-left (click)="shareJobActionSheet(job)"><ion-icon name="share-alt"></ion-icon>Share</button>
+      <button ion-button icon-left (click)="shareJob(job)"><ion-icon name="share-alt"></ion-icon>Share</button>
     </ion-buttons> 
   </ion-navbar>
 </ion-header>
@@ -32,7 +32,6 @@
       </ion-row>
     </ion-grid>
   </div>
-
 
   <ion-list *ngIf="job" >  
 
