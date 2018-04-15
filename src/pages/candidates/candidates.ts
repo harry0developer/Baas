@@ -9,6 +9,7 @@ import { DataProvider } from '../../providers/data/data';
 // import * as moment from 'moment';
 import { PostJobsPage } from '../post-jobs/post-jobs';
 import { FilterCandidatesPage } from '../filter-candidates/filter-candidates';
+import { UploadImageProvider } from '../../providers/upload-image/upload-image';
 
 
 @IonicPage()
@@ -37,9 +38,15 @@ export class CandidatesPage {
   displayUsersSearch: boolean = false;
   filter: any;
   jobs: any;
+  lastImage: string = null;
+  uploads: string = '';
+    
+
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public events: Events,
-    public navParams: NavParams, public dataProvider: DataProvider) {
+    public navParams: NavParams, public dataProvider: DataProvider, public uploadImageProvider: UploadImageProvider) {
     this.searchControl = new FormControl();
+    this.lastImage = this.uploadImageProvider.lastImage;
+    this.uploads = this.dataProvider.getMediaLink();
   }
   
   
@@ -141,6 +148,10 @@ export class CandidatesPage {
       return user.distance <= data.distance && user.title === data.title
     });
     return list;
+  }
+
+  pathForImage(path) {
+    this.uploadImageProvider.pathForImage(path);
   }
 
 }

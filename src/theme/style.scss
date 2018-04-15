@@ -60,3 +60,7 @@ ion-item-divider.item.item-divider, ion-badge.badge{
 .action-sheet-button.icon-email{
   color: $email !important;
 }
+.action-sheet-button.icon-camera, .action-sheet-button.icon-folder{
+  color: $primary !important;
+};
+

@@ -1,8 +1,9 @@
 <ion-menu [content]="content"  persistent="true" >
   <ion-content class="sidemenu">
     <div *ngIf="profile" class="profile">
-      <img src="http://placehold.it/100x100" alt="profile picture">
+        <img *ngIf="profile" src="{{uploads}}/users/{{profile.picture}}"/> 
       <h2>{{profile.firstname}} {{profile.lastname}}</h2>
+      <p>{{profile.title}}</p>
     </div>
     <ion-list *ngIf="profile">
       <ion-item menuClose ion-item icon-left *ngIf="profile.type === 'Candidate'" (click)="nav.setRoot(pages2.jobsPage)">

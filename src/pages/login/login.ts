@@ -25,6 +25,7 @@ export class LoginPage {
       this.dataProvider.dismissLoading();
       this.ionEvents.publish("user:loggedIn", this.profile);
       localStorage.setItem('user', JSON.stringify(this.profile));
+      this.dataProvider.setMyProfile(this.profile);
       if(this.profile.type === "Recruiter"){
         this.navCtrl.setRoot(CandidatesPage);
       }
@@ -48,6 +49,7 @@ export class LoginPage {
       }else{
         this.dataProvider.dismissLoading();
         localStorage.setItem('user', JSON.stringify(res.data));
+        this.dataProvider.setMyProfile(res.data);
         this.ionEvents.publish("user:loggedIn", res.data);
         if(res.data.type === "Recruiter"){
           this.navCtrl.setRoot(CandidatesPage);

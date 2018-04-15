@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DataProvider } from '../../providers/data/data';
 import { IonicPage, NavController, NavParams, Events, ModalController, ActionSheetController } from 'ionic-angular';
-import { EditProfilePage } from '../edit-profile/edit-profile';
+import { UploadImageProvider } from '../../providers/upload-image/upload-image';
 
 @IonicPage()
 @Component({
@@ -16,9 +16,13 @@ export class UserDetailsPage {
   page: string;
   ratings: any; 
   applied: boolean; 
-  
-  constructor(public navCtrl: NavController, public dataProvider: DataProvider, public actionSheetCtrl: ActionSheetController,
-    public ionEvents: Events, public navParams: NavParams, public modalCtrl: ModalController) {
+  lastImage: string = null;
+  uploads: string = '';
+  constructor(public navCtrl: NavController, public dataProvider: DataProvider,
+    public actionSheetCtrl: ActionSheetController, public ionEvents: Events,
+    public navParams: NavParams, public modalCtrl: ModalController, public uploadImageProvider: UploadImageProvider) {
+      this.lastImage = uploadImageProvider.lastImage;
+      this.uploads = this.dataProvider.getMediaLink();
   }
 
   ionViewDidLoad() { 
@@ -120,6 +124,10 @@ export class UserDetailsPage {
     });
  
     actionSheet.present();
+  }
+
+  pathForImage(path) {
+    this.uploadImageProvider.pathForImage(path);
   }
  
 }

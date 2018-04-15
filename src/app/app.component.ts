@@ -9,11 +9,11 @@ import { LoginPage } from '../pages/login/login';
 // import { SetupPage } from '../pages/setup/setup';
 import { MyJobsPage } from '../pages/my-jobs/my-jobs'; 
 import { CandidatesPage } from '../pages/candidates/candidates';
-import { UserDetailsPage } from '../pages/user-details/user-details';
 
 // import { ProfilePage } from '../pages/profile/profile';
 import { DataProvider } from '../providers/data/data';
 import { ProfilePage } from "../pages/profile/profile";
+import { UploadImageProvider } from '../providers/upload-image/upload-image';
 
 @Component({
   templateUrl: 'app.html'
@@ -26,7 +26,8 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   pages2: any = {}; 
   profile: any;
-  constructor(public platform: Platform, public statusBar: StatusBar,
+  uploads: string = '';
+  constructor(public platform: Platform, public statusBar: StatusBar, public uploadImageProvider: UploadImageProvider,
     public ionEvents: Events, public splashScreen: SplashScreen, public dataProvider: DataProvider) {
     this.initializeApp();
   
@@ -55,6 +56,7 @@ export class MyApp {
       this.splashScreen.hide();
       this.profile = JSON.parse(localStorage.getItem('user'));
       this.dataProvider.getLocation();
+      this.uploads = this.dataProvider.getMediaLink();
       
     });
   }
@@ -70,6 +72,10 @@ export class MyApp {
   logout(){
     localStorage.removeItem('user');
     this.nav.setRoot(LoginPage);
+  }
+  
+  pathForImage(path) {
+    this.uploadImageProvider.pathForImage(path);
   }
 
 }

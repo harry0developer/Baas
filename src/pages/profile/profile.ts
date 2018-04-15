@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DataProvider } from '../../providers/data/data';
 import { IonicPage, NavController, NavParams, Events, ModalController } from 'ionic-angular';
 import { EditProfilePage } from '../edit-profile/edit-profile';
+import { UploadImageProvider } from '../../providers/upload-image/upload-image';
 
 @IonicPage()
 @Component({
@@ -9,20 +10,25 @@ import { EditProfilePage } from '../edit-profile/edit-profile';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-    
-  data:any = []; 
   profile: any; //me
-  user: any; //current viewed profile
-  page: string;
   ratings: any; 
   applied: boolean; 
-  
+  lastImage: string = null;
+  uploads: string = '';
+  url: string;
   constructor(public navCtrl: NavController, public dataProvider: DataProvider,
-    public ionEvents: Events, public navParams: NavParams, public modalCtrl: ModalController) {
+    public ionEvents: Events, public navParams: NavParams, public modalCtrl: ModalController,
+    public uploadImageProvider: UploadImageProvider) {
+      this.lastImage = uploadImageProvider.lastImage;
+      this.uploads = this.dataProvider.getMediaLink();
   }
 
   ionViewDidLoad() { 
     this.profile = JSON.parse(localStorage.getItem('user'));
+    this.ionEvents.subscribe('user:profileChanged', (profile ) => {
+      console.log("User profile updated"); 
+      this.profile = profile;
+    });
   }
  
 
@@ -49,5 +55,9 @@ export class ProfilePage {
     });
     editProfile.present();
   } 
+ 
+  presentUploadImageActionSheet() {
+    this.uploadImageProvider.presentActionSheet();
+  }
  
 }

@@ -4,7 +4,6 @@ import { FormControl } from '@angular/forms';
 import { FilterPage } from '../filter/filter';
 import { JobDetailsPage } from '../job-details/job-details';
 import { DataProvider } from '../../providers/data/data';
-import { PostJobsPage } from '../post-jobs/post-jobs';
 
 import 'rxjs/add/operator/debounceTime';
 import * as moment from 'moment';
@@ -59,13 +58,6 @@ export class JobsPage {
       this.searching = false;
       this.setFilteredJobs();
     });
-  }
-
-
-  init(){
-    this.dataProvider.loadJobs().then(res => {
-      const location = this.dataProvider.getLatLng();
-    })
   }
 
   setFilteredJobs() {

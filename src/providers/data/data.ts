@@ -10,12 +10,12 @@ import * as moment from 'moment';
 // let apiUrl = 'http://moralemedia.co.za/eventon/api/';
 // let uploads = 'http://moralemedia.co.za/eventon/api/uploads/';
 let apiUrl = 'http://localhost/Hunters/api/';
-// let uploads = 'http://localhost/Hunters/api/uploads';
-
+// let uploads = 'http://localhost/Hunters/api/uploads/';
+ 
 @Injectable()
 export class DataProvider {
   loadSpinner: any;
-  uploads: string = 'http://localhost/Hunters/api/uploads/';
+  uploads: string = 'http://localhost/Hunters/api/uploads';
   users: any = [];
   experiences: any = [];
   data: any;
@@ -30,6 +30,7 @@ export class DataProvider {
   categories: any;
   KM: number =  1.60934;
   location: any = {lat: "", lng:""};
+  profile: any;
   constructor(public http: Http, public loadingCtrl: LoadingController, public events: Events,
     public alertCtrl: AlertController, public toastCtrl: ToastController, public socialSharing: SocialSharing,
 
@@ -45,6 +46,10 @@ export class DataProvider {
  
   getMediaLink(){
     return this.uploads;
+  }
+
+  getDBLink(){
+    return apiUrl;
   }
   
   loadUsers() {
@@ -84,7 +89,7 @@ export class DataProvider {
     return new Promise(resolve => {
       let headers = new Headers();
       this.http.post(apiUrl + 'getJobs', null ,{headers: headers})
-        .map(res => res.json())
+        .map(res => res.json() || {})
         .subscribe(data => {
           this.jobs = data.data;
           resolve(this.jobs);
@@ -242,6 +247,14 @@ export class DataProvider {
     return this.uploads;
   }
 
+  getMyProfile() {
+    return this.profile;
+  }
+
+  setMyProfile(profile) {
+    this.profile = profile;
+  }
+
   getData(type) {
     return new Promise((resolve, reject) => {
       let headers = new Headers();
@@ -258,7 +271,7 @@ export class DataProvider {
 
   //Adders ===========
 
-  presentLoading(msg) {
+  presentLoading(msg = 'Please wait...') {
     this.loadSpinner = this.loadingCtrl.create({
       content: msg
     });

@@ -20,6 +20,7 @@ export class AppointmentsPage {
     }
     
   ionViewDidLoad() {
+    this.dataProvider.presentLoading();
     this.dataProvider.loadAppointments().then(res => {
       res.map(aUser =>  {
         if(this.profile.type === 'Recruiter'){
@@ -33,13 +34,16 @@ export class AppointmentsPage {
         }
       })
     }).then(() => {
+      this.dataProvider.dismissLoading();
       this.dataProvider.loadUsers().then(res => {
         this.mapUserWithAppointments(res, this.myAppointments);
       }).catch(err => {
+        this.dataProvider.dismissLoading();
         console.log(err);
       });
     })
     .catch(err => {
+      this.dataProvider.dismissLoading();
       console.log(err);
     });
 

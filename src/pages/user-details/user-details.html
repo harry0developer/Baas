@@ -6,7 +6,9 @@
 
 <ion-content>
   <div class="top" *ngIf="user">
-    <img src="http://placehold.it/100x100" alt="">
+
+    <img *ngIf="user.picture" src="{{uploads}}/users/{{user.picture}}"/> 
+    
     <h2>{{user.firstname}} {{user.lastname}} </h2>
     <p>{{user.title}}</p>  
   </div>

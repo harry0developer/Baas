@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
 import { JobDetailsPage } from '../job-details/job-details';
 import { StatsPage } from '../stats/stats';
-import { ItemSliding } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -31,6 +30,7 @@ export class MyJobsPage {
   }
   
   ionViewDidLoad() { 
+    this.dataProvider.presentLoading();
     this.getAllAppliedJobs();
     this.getAllUsers();  
     this.getMyPostedJobs();
@@ -40,6 +40,7 @@ export class MyJobsPage {
 
     //====Candidate ===
     this.getViewedJobs();
+    this.dataProvider.dismissLoading();
   }
 
   mapJobs(jobs, aJobs){
@@ -215,17 +216,20 @@ export class MyJobsPage {
   }
 
   updateViewJobsStatus(slider, job, status) {
+    this.dataProvider.presentLoading();
     let data = {
       status: status,
       job_id_fk: job.job_id,
       user_id_fk: this.profile.user_id,
     }
     this.dataProvider.postData(data, "updateJobViewStatus").then(res => {
+      this.dataProvider.dismissLoading();
       let results;
       results = res;
       this.getViewedJobs();
       this.closeSlide(slider);
     }).catch(err => {
+      this.dataProvider.dismissLoading();
       console.log(err);
     })
   }
