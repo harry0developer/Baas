@@ -42,8 +42,92 @@ $app->post('/addToJobViews','addToJobViews');
 $app->post('/removeJobFromApplicants','removeJobFromApplicants');   
 $app->post('/removeUserFromAppointments','removeUserFromAppointments');
 $app->post('/updateJobViewStatus','updateJobViewStatus');   
+$app->post('/uploadProfilePicture','uploadProfilePicture');
+$app->post('/updatePictureUrl','updatePictureUrl');   
 
 $app->run();
+
+/*========= UPLOAD PROFILE PIC =============*/
+function uploadProfilePicture(){
+
+    $temp = explode(".", $_FILES["file"]["name"]);
+    $newfilename = $newfilename = sha1(uniqid(mt_rand(), true)) . '.' .end($temp);
+    if(move_uploaded_file($_FILES["file"]["tmp_name"],  "uploads/users/".$newfilename)){
+        echo $newfilename; 
+    }else{
+        echo '{"error":"Proifile picture upload failed"}';
+    }
+
+}
+
+//========= UPDATE USER PROFILE PIC URL ======
+function updatePictureUrl(){
+    $request = \Slim\Slim::getInstance()->request();
+    $data = json_decode($request->getBody());
+
+    $email = $data->email; 
+    $picture = $data->url;
+
+    try { 
+
+        $email_check = preg_match('~^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.([a-zA-Z]{2,4})$~i', $email);
+        
+        if ( strlen(trim($email))>0 && $email_check>0)
+        {
+            $db = getDB();
+            $userData = '';
+            $sql = "SELECT user_id FROM Users WHERE email=:email";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam("email", $email,PDO::PARAM_STR);
+            $stmt->execute();
+            $mainCount=$stmt->rowCount();
+            if($mainCount==1)
+            {  
+                $sql1="UPDATE Users SET picture=:picture WHERE email=:email";
+
+                $stmt1 = $db->prepare($sql1);
+                $stmt1->bindParam("email", $email,PDO::PARAM_STR);
+                $stmt1->bindParam("picture", $picture,PDO::PARAM_STR);
+                 
+                $stmt1->execute();
+                $userData=internalUserDetails($email);
+            }  
+            $db = null;
+            if($userData){
+                $userData = json_encode($userData);
+                echo '{"data": ' .$userData . '}';
+            }else {
+               echo '{"error":{"text":"Email '.$email.' already registered"}}';
+            }
+        }
+        else{
+            echo '{"error":{"text":"Enter valid data"}}';
+        }
+    }
+    catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+}
+
+/* ### internal Username Details ### */
+function internalUserDetails($input) {
+    
+    try {
+        $db = getDB();
+        $sql = "SELECT * FROM Users WHERE email=:input";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("input", $input,PDO::PARAM_STR);
+        $stmt->execute();
+        $usernameDetails = $stmt->fetch(PDO::FETCH_OBJ);
+        $usernameDetails->token = apiToken($usernameDetails->user_id);
+        $db = null;
+        return $usernameDetails;
+        
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+    
+}
    
 function login() { 
     $request = \Slim\Slim::getInstance()->request();
@@ -89,6 +173,7 @@ function login() {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 }
+
 function signup(){
     $request = \Slim\Slim::getInstance()->request();
     $data = json_decode($request->getBody());
