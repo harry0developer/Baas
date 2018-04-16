@@ -11,9 +11,13 @@ import { UserDetailsPage } from '../user-details/user-details';
 export class AppointmentsPage {
   appointmentSegment: string = 'offered';
   profile: any;
-  users: any;
-  appointments: any = [];
-  myAppointments: any = [];
+  users: any; 
+
+  recAppointments: any;
+  canAppointments: any;
+
+  recruiterAppointments: any = [];
+  candidateAppointments: any = [];
   uploads: string = '';
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public dataProvider: DataProvider, public ionEvents: Events) {  
@@ -27,18 +31,20 @@ export class AppointmentsPage {
       res.map(aUser =>  {
         if(this.profile.type === 'Recruiter'){
           if( aUser.employer_id_fk == this.profile.user_id){
-            this.appointments.push(aUser);
+            this.recruiterAppointments.push(aUser);
           }
-        }else if(this.profile.type === 'Candidate'){
+        }
+        if(this.profile.type === 'Candidate'){
           if( aUser.user_id_fk == this.profile.user_id){
-            this.myAppointments.push(aUser);
+            this.candidateAppointments.push(aUser);
           }
         }
       })
     }).then(() => {
       this.dataProvider.dismissLoading();
-      this.dataProvider.loadUsers().then(res => {
-        this.mapUserWithAppointments(res, this.myAppointments);
+      this.dataProvider.loadUsers().then(users => {
+        this.users = users;
+        this.recruiterAppointments && this.recruiterAppointments.length > 0 ? this.mapUserWithAppointments(users, this.recruiterAppointments) : this.mapUserWithAppointments(users, this.candidateAppointments)
       }).catch(err => {
         this.dataProvider.dismissLoading();
         console.log(err);
@@ -50,26 +56,27 @@ export class AppointmentsPage {
     });
 
     this.ionEvents.subscribe('appointments:updated', (res) => {
-      this.appointments = res;
-      this.myAppointments = res;
-      console.log(res);
+      this.mapUserWithAppointments(this.users, res);
     });
 
   }
+ 
 
   mapUserWithAppointments(users, app){
+    this.recAppointments = [];
+    this.canAppointments = [];
     app.map(aUser => {
       users.map(user => {
-        if(aUser.employer_id_fk == user.user_id && aUser.user_id_fk == this.profile.user_id){ //Candidate
-          let usa = Object.assign({}, user, aUser);
-          this.myAppointments.push(usa);
+        if(aUser.employer_id_fk === user.user_id){ //Candidate
+          // let usa = Object.assign({}, user, aUser);
+          this.canAppointments.push(user);
         }
-        else if(aUser.user_id_fk == user.user_id && aUser.employer_id_fk == this.profile.user_id){ //recruiter
-          let usa = Object.assign({}, user, aUser);
-          this.appointments.push(usa);
+        else if(aUser.user_id_fk === user.user_id){ //recruiter
+          // let usa = Object.assign({}, user, aUser);
+          this.recAppointments.push(user);
         }
       })
-    })
+    }); 
   }
 
   viewUserProfile(user){
