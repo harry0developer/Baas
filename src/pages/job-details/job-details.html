@@ -62,7 +62,7 @@
 
     </ion-card-content>
     
-    <div *ngIf="user && user.type === 'Candidate'">
+    <div *ngIf="profile && profile.type === 'Candidate'">
       <div padding [hidden]="applied">
         <button ion-button  color="dark" block (click)="applyNow(job)">Apply now</button>
       </div>

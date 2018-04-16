@@ -227,6 +227,12 @@ export class MyJobsPage {
     this.navCtrl.push(JobDetailsPage, {job:job});
   }
 
+
+  viewJob(slider,job) {
+    this.navCtrl.push(JobDetailsPage, {job:job});
+    this.closeSlide(slider);
+  }
+
   updateViewJobsStatus(slider, job, status) {
     this.dataProvider.presentLoading();
     let data = {

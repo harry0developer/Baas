@@ -24,13 +24,12 @@ export class JobDetailsPage {
   countApplied: number;
   constructor(public navCtrl: NavController, public ionEvent: Events, public actionSheetCtrl: ActionSheetController,
     public dataProvider: DataProvider, public navParams: NavParams) { 
-    this.profile = JSON.parse(localStorage.getItem("user"));
     this.applied = false;
   }
     
   ionViewDidLoad(){
     this.job = this.navParams.get('job');
-    this.user = this.navParams.get('user');
+    this.profile = JSON.parse(localStorage.getItem("user"));
     this.hasApplied();
     this.post_time = moment(this.job.date_created, "YYYYMMDD").fromNow();  
     this.didView = false;
