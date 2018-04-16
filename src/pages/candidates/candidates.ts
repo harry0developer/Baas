@@ -45,7 +45,6 @@ export class CandidatesPage {
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public events: Events,
     public navParams: NavParams, public dataProvider: DataProvider, public uploadImageProvider: UploadImageProvider) {
     this.searchControl = new FormControl();
-    this.lastImage = this.uploadImageProvider.lastImage;
     this.uploads = this.dataProvider.getMediaLink();
   }
   

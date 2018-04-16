@@ -14,9 +14,11 @@ export class AppointmentsPage {
   users: any;
   appointments: any = [];
   myAppointments: any = [];
+  uploads: string = '';
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public dataProvider: DataProvider, public ionEvents: Events) {  
       this.profile = JSON.parse(localStorage.getItem('user'));  
+      this.uploads = this.dataProvider.getMediaLink();
     }
     
   ionViewDidLoad() {
@@ -25,7 +27,7 @@ export class AppointmentsPage {
       res.map(aUser =>  {
         if(this.profile.type === 'Recruiter'){
           if( aUser.employer_id_fk == this.profile.user_id){
-            this.myAppointments.push(aUser);
+            this.appointments.push(aUser);
           }
         }else if(this.profile.type === 'Candidate'){
           if( aUser.user_id_fk == this.profile.user_id){
@@ -49,6 +51,7 @@ export class AppointmentsPage {
 
     this.ionEvents.subscribe('appointments:updated', (res) => {
       this.appointments = res;
+      this.myAppointments = res;
       console.log(res);
     });
 
@@ -57,15 +60,13 @@ export class AppointmentsPage {
   mapUserWithAppointments(users, app){
     app.map(aUser => {
       users.map(user => {
-        if(aUser.employer_id_fk == user.user_id && aUser.user_id_fk == this.profile.user_id){
+        if(aUser.employer_id_fk == user.user_id && aUser.user_id_fk == this.profile.user_id){ //Candidate
           let usa = Object.assign({}, user, aUser);
-          this.appointments.push(usa);
-          console.log(usa);
+          this.myAppointments.push(usa);
         }
-        else if(aUser.user_id_fk == user.user_id && aUser.employer_id_fk == this.profile.user_id){
+        else if(aUser.user_id_fk == user.user_id && aUser.employer_id_fk == this.profile.user_id){ //recruiter
           let usa = Object.assign({}, user, aUser);
           this.appointments.push(usa);
-          console.log(usa)
         }
       })
     })
