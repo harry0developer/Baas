@@ -21,9 +21,7 @@ export class FilterCandidatesPage {
     });
     
     this.filter = this.navParams.get('filter');
-    if(!this.filter){
-      this.filter = JSON.parse(localStorage.getItem('filter'));
-    }
+
     if(this.filter){
       this.settings.distance = this.filter.distance;
       this.settings.title = this.filter.title;
@@ -33,7 +31,8 @@ export class FilterCandidatesPage {
   }
 
   cancel(){
-    this.viewCtrl.dismiss(this.filter);
+    localStorage.setItem('filter', '');
+    this.viewCtrl.dismiss(null);
   } 
 
   applyFilter(){

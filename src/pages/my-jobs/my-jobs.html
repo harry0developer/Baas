@@ -116,18 +116,18 @@
             <h2 *ngIf="job">{{job.title}}</h2>
             <p *ngIf="job">{{job.category}}</p>
             <p *ngIf="job">{{job.type }}</p>
-            <ion-icon name="arrow-forward" item-end></ion-icon>
         </ion-item>
       </ion-list> 
       <ion-item-divider>
         <div item-start *ngIf="job && job.viewedUsers">
-          <p><i class="fa fa-eye"></i> {{job.viewedUsers.length}} Views</p>
+          <p>{{job.viewedUsers.length}} Views</p>
         </div>
-        <!-- <div>
-            <p><i class="fa fa-calendar"></i> {{job.date_created}}</p>
-        </div> -->
-        <div item-end *ngIf="job && job.appliedUsers">
-          <p><i class="fa fa-archive"></i> {{job.appliedUsers.length}} Applied</p>
+        <div item-start *ngIf="job && job.appliedUsers">
+          <p>{{job.appliedUsers.length}} Applied</p>
+        </div>
+        <div *ngIf="job" item-end>
+          <button ion-button clear color="dark" (click)="editJobDetails(job)">Edit Job</button>
+          <button ion-button clear color="dark" (click)="viewJobDetails(job)">View Job</button>
         </div>
       </ion-item-divider>
     </div>

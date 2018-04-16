@@ -62,11 +62,13 @@
 
     </ion-card-content>
     
-    <div padding [hidden]="applied">
-      <button ion-button  color="dark" block (click)="applyNow(job)">Apply now</button>
-    </div>
-    <div padding [hidden]="!applied">
-      <button ion-button  color="dark" block (click)="confirmWithdrawApplication(job)">Withdraw Application</button>
+    <div *ngIf="user && user.type === 'Candidate'">
+      <div padding [hidden]="applied">
+        <button ion-button  color="dark" block (click)="applyNow(job)">Apply now</button>
+      </div>
+      <div padding [hidden]="!applied">
+        <button ion-button  color="dark" block (click)="confirmWithdrawApplication(job)">Withdraw Application</button>
+      </div>
     </div>
  
   </ion-list>

@@ -127,12 +127,10 @@ export class DataProvider {
     });
   }
 
-
-
   loadAppliedJobs() {
-    if (this.appliedJobs) {
-      return Promise.resolve(this.appliedJobs);
-    }
+    // if (this.appliedJobs) {
+    //   return Promise.resolve(this.appliedJobs);
+    // }
     return new Promise(resolve => {
       let headers = new Headers();
       this.http.post(apiUrl + 'getAppliedJobs', null ,{headers: headers})

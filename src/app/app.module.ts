@@ -37,6 +37,7 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
+import { EditJobPage } from '../pages/edit-job/edit-job';
 @NgModule({
   declarations: [
     MyApp,
@@ -60,6 +61,7 @@ import { Camera } from '@ionic-native/camera';
     ProfilePage,
     JobsPage, 
     ForgotPasswordPage,
+    EditJobPage,
   ],
   imports: [
     BrowserModule, 
@@ -90,6 +92,7 @@ import { Camera } from '@ionic-native/camera';
     ProfilePage,
     JobsPage,
     ForgotPasswordPage,
+    EditJobPage,
   ],
   providers: [
     StatusBar,

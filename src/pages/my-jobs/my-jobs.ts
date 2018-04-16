@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ModalController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
 import { JobDetailsPage } from '../job-details/job-details';
 import { StatsPage } from '../stats/stats';
+import { EditJobPage } from '../edit-job/edit-job';
 
 @IonicPage()
 @Component({
@@ -22,7 +23,7 @@ export class MyJobsPage {
   myJobsSegment: string = 'applied';
   
   constructor(public navCtrl: NavController,public ionEvents: Events,
-    public dataProvider: DataProvider,
+    public dataProvider: DataProvider, public modalCtrl: ModalController,
     public navParams: NavParams) {
     this.profile = JSON.parse(localStorage.getItem("user"));
     this.getAllAppliedJobs();  
@@ -172,7 +173,14 @@ export class MyJobsPage {
       this.navCtrl.push(StatsPage, {job:job});
     }
   }
-
+ 
+  editJobDetails(job){
+    let filter = this.modalCtrl.create(EditJobPage, { job:job });
+    filter.onDidDismiss(job => {
+      console.log(job); //publish event
+    });
+    filter.present();
+  }
 
   //======== CANDIDATE =========
 
@@ -215,6 +223,10 @@ export class MyJobsPage {
     this.closeSlide(slider);
   }
 
+  viewJobDetails(job) {
+    this.navCtrl.push(JobDetailsPage, {job:job});
+  }
+
   updateViewJobsStatus(slider, job, status) {
     this.dataProvider.presentLoading();
     let data = {
@@ -232,11 +244,6 @@ export class MyJobsPage {
       this.dataProvider.dismissLoading();
       console.log(err);
     })
-  }
-
-  viewJob(slider,job) {
-    this.closeSlide(slider);
-    this.jobDetails(job);
   }
 
 }

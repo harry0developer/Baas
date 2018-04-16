@@ -8,9 +8,9 @@
       <button ion-button icon-only (click)="filterCandidates()">
         <ion-icon name="settings"></ion-icon>
       </button> 
-      <button ion-button icon-only (click)="postJob()">
+      <!-- <button ion-button icon-only (click)="postJob()">
         <ion-icon name="create"></ion-icon>
-      </button> 
+      </button>  -->
     </ion-buttons> 
   </ion-navbar>
   <ion-toolbar color="dark">
@@ -50,4 +50,8 @@
       <p>No candidates matching that category.</p> 
     </ion-item>
   </ion-list>
+
+  <ion-fab bottom right>
+    <button ion-fab color="dark" (click)="postJob()"><ion-icon name="create"></ion-icon></button>
+  </ion-fab>
 </ion-content>

@@ -1,7 +1,7 @@
 <ion-menu [content]="content"  persistent="true" >
   <ion-content class="sidemenu">
-    <div *ngIf="profile" class="profile">
-        <img *ngIf="profile" src="{{uploads}}/users/{{profile.picture}}"/> 
+    <div *ngIf="profile" class="profile" >
+      <img *ngIf="profile.picture" src="{{uploads}}/users/{{profile.picture}}"/> 
       <h2>{{profile.firstname}} {{profile.lastname}}</h2>
       <p>{{profile.title}}</p>
     </div>
@@ -39,9 +39,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-     
   </ion-content>
-
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->

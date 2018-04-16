@@ -105,9 +105,7 @@ export class CandidatesPage {
       if (data != null) { 
         this.dataProvider.loadJobs().then(res => this.jobs = res);
         this.dataProvider.presentToast("Job posted successfully");
-      }else{
-        this.dataProvider.presentToast("Oops something went wrong, try again later");
-      }
+      } 
     });
     postModal.present();
   }
@@ -129,14 +127,12 @@ export class CandidatesPage {
     this.candidates = this.tmpCandiates;
     let filter = this.modalCtrl.create(FilterCandidatesPage, { filter: this.filter });
     filter.onDidDismiss(filter => {
+      this.filter = filter;
       if (filter != null) {
-        this.filter = filter;
         localStorage.setItem('filter', JSON.stringify(filter));
         this.candidates = this.applyFilter(filter);
       }else{ 
-        this.dataProvider.loadUsers().then(users => {
-          this.candidates = users.filter(user => user.type === 'Candidate');
-        })
+        this.candidates = this.tmpCandiates;
       }
     });
     filter.present();
