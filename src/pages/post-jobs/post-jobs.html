@@ -149,10 +149,8 @@
         </ion-row>
       </ion-grid>
     </form>
-    <div class="but">
-      <div class="form-validation">
-        <p *ngIf="postJobForm.invalid">All fields are required</p>
-      </div>
+    <div class="but form-validation">
+      <p *ngIf="postJobForm.invalid">All fields are required</p>
       <button ion-button block color="dark" [disabled]="postJobForm.invalid" (click)="postJob()"> Post Job </button>
     </div>
   </ion-list>
