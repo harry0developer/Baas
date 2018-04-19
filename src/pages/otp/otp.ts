@@ -10,8 +10,8 @@ import { LoginPage } from '../login/login';
   templateUrl: 'otp.html',
 })
 export class OtpPage {
-  data: any = {};
-  otp: any;
+  otpData: any = {opt: ''};
+  data: any;
   constructor(public navCtrl: NavController,public alertCtrl: AlertController, public dataProvider: DataProvider, public modalCtrl: ModalController, public navParams: NavParams) {
   }
 
@@ -22,10 +22,10 @@ export class OtpPage {
 
  
   confirmOTP(){    
-    if(this.data.otp == this.otp){
+    if(this.data.otp == this.otpData.otp){
       this.navCtrl.setRoot(SetupPage , {data: this.data});
     }else{
-      console.log(this.otp + " " + this.data.otp);
+      console.log(this.otpData.otp + " " + this.data.otp);
       this.dataProvider.presentAlert("Otp code incorrect", "The code you have entered does not match the one sent to your email address");
     }
   }

@@ -16,7 +16,22 @@ import { ValidatorDirective } from '../../directives/validator/validator';
 export class LoginPage {
   data: any = {email: "", password:""}; 
   profile: any;
+  model = {
+    firstName: '',
+    lastName:'',
+    email:'',
+    password:'',
+    language:''
+  }
+  langs: string[] = [
+    'English',
+    'French',
+    'German',
+  ];
 
+  @ViewChild('f') form: any;
+  
+ 
   constructor(public navCtrl: NavController, public dataProvider:DataProvider, public modalCtrl: ModalController, 
     public ionEvents: Events, public navParams: NavParams,
     private formBuilder: FormBuilder, public validatorDirective: ValidatorDirective) {
@@ -39,6 +54,28 @@ export class LoginPage {
     }else{
       this.dataProvider.dismissLoading();
     }
+  } 
+
+  onSubmit() {
+    if (this.form.valid) {
+      console.log("Form Submitted!");
+      this.form.reset();
+    }
+  }
+
+  emailDomainValidator(control: FormControl) {
+    let email = control.value;
+    if (email && email.indexOf("@") != -1) {
+      let [_, domain] = email.split("@");
+      if (domain !== "codecraft.tv") {
+        return {
+          emailDomain: {
+            parsedDomain: domain
+          }
+        }
+      }
+    }
+    return null;
   }
 
 

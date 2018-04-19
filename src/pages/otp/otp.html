@@ -12,12 +12,20 @@
   </ion-grid>
   <ion-list no-lines>
     <p class="otp">Enter 5 digit Code send to your email address. e.g 12345</p>
-    <ion-item>
-      <!-- <ion-label><i class="fa fa-lock" item-start></i>OTP Code</ion-label> -->
-      <ion-input type="number"  placeholder="&#xf023; OTP Code" style="font-family:SansCaption, FontAwesome" [(ngModel)]="otp"></ion-input>
-    </ion-item> 
+    <form novalidate #optForm="ngForm">
+      <ion-item> 
+        <ion-input type="number" name="otp" [(ngModel)]="otpData.otp" required pattern="[0-9]{5}"
+        #otp="ngModel" placeholder="&#xf023; OTP Code" style="font-family:SansCaption, FontAwesome"></ion-input>
+      </ion-item>
+      <div class="form-validation">
+        <div *ngIf="otp.errors && (otp.dirty || otp.touched)">
+          <p *ngIf="otp?.errors.required">OTP code is required</p>
+          <p *ngIf="otp?.errors.pattern">OTP code must be 5 digits</p>
+        </div>
+      </div>
+    </form> 
   </ion-list>
-  <button ion-button block color="dark" round (click)="confirmOTP()">Confirm Code</button>
+  <button ion-button block color="dark" round [disabled]="optForm.invalid" (click)="confirmOTP()">Confirm Code</button>
   <button ion-button block color="dark" clear (click)="resendOTP()">Did not get the code? Resend</button>
 </ion-content>
 

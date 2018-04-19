@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 
@@ -8,17 +8,18 @@ import { LoginPage } from '../login/login';
   templateUrl: 'forgot-password.html',
 })
 export class ForgotPasswordPage {
-
+  data: any = {email:''};
+  @ViewChild('forgotPasswordForm') forgotPasswordForm: any;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  email: any;
   ionViewDidLoad() {
     console.log('ionViewDidLoad ForgotPasswordPage');
   }
 
   resetPassword(){
-    console.log(this.email)
+    console.log(this.data.email);
   }
 
   login(){

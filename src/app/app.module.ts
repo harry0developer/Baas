@@ -3,7 +3,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { AddSkillsPage } from '../pages/add-skills/add-skills';
 import { AppointmentsPage } from '../pages/appointments/appointments';
 import { AutocompletePage } from '../pages/autocomplete/autocomplete';
 import { CandidatesPage } from '../pages/candidates/candidates';
@@ -38,6 +37,7 @@ import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 import { EditJobPage } from '../pages/edit-job/edit-job';
+import { ValidatorDirective } from '../directives/validator/validator';
 @NgModule({
   declarations: [
     MyApp,
@@ -45,7 +45,6 @@ import { EditJobPage } from '../pages/edit-job/edit-job';
     FilterPage,
     UserDetailsPage,
     EditProfilePage,
-    AddSkillsPage,
     LoginPage,
     SignupPage,
     OtpPage,
@@ -70,13 +69,11 @@ import { EditJobPage } from '../pages/edit-job/edit-job';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-
     MyApp,
     AppointmentsPage,
     FilterPage,
     UserDetailsPage,
     EditProfilePage,
-    AddSkillsPage,
     LoginPage,
     SignupPage,
     OtpPage,
@@ -107,6 +104,7 @@ import { EditJobPage } from '../pages/edit-job/edit-job';
     FilePath,
     SocialSharing,
     UploadImageProvider,
+    ValidatorDirective,
   ]
 })
 export class AppModule {}

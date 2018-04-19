@@ -113,7 +113,9 @@ export class MyJobsPage {
     let aJobs = [];
     let users = [];
     this.dataProvider.loadAppliedJobs().then(res => {
-      res.forEach(aJob => {
+      let results;
+      results = res;
+      results.forEach(aJob => {
         if(job.job_id == aJob.job_id_fk){
           aJobs.push(aJob)
         }

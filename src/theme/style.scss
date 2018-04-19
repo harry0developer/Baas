@@ -6,48 +6,49 @@ $grey: #ddd;
 $facebook: #3b5998;
 $twitter: #23a1f4;
 $email: #c71610;
+$form-error: #c53f3f;
 
 @font-face{
-    font-family: SansCaption;
-    src: url('../assets/fonts/SansCaption.woff2') format('woff2');
+  font-family: SansCaption;
+  src: url('../assets/fonts/SansCaption.woff2') format('woff2');
 }
 
 *{
-    font-family: SansCaption;
+  font-family: SansCaption;
 }
 
 .item-inner, ion-item{
-    border-bottom: none !important;
-    
-} 
+  border-bottom: none !important;
+}
+
 .item.item-block, ion-item{
-    border-top: none !important;
+  border-top: none !important;
 }
 
 ion-item{
-    h2{
-        font-size: 1em !important;
-        display: inline-block;
-    } 
+  h2{
+    font-size: 1em !important;
+    display: inline-block;
+  } 
 }
 
 .range-knob  {
-    background: $primary !important;
+  background: $primary !important;
 }
  
 ion-content.content{
-    background-color: $primary;
+  background-color: $primary;
 } 
 
 
 ion-item-divider.item.item-divider, ion-badge.badge{
-    background-color: $primary;
-    color: $white;
+  background-color: $primary;
+  color: $white;
  }
 
 .toolbar-background{
-    background-color: $primary !important;
-    color: #fff !important;
+  background-color: $primary !important;
+  color: #fff !important;
 }
 
  
@@ -64,3 +65,9 @@ ion-item-divider.item.item-divider, ion-badge.badge{
   color: $primary !important;
 };
 
+.form-validation {
+  p {
+      text-align: center;
+      color: $form-error;
+  }
+}

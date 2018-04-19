@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, ViewController, NavParams, ModalController } from 'ionic-angular';
 import { OtpPage} from '../otp/otp';
 import { DataProvider } from '../../providers/data/data';
@@ -10,7 +10,8 @@ import { LoginPage } from '../login/login';
   templateUrl: 'signup.html',
 })
 export class SignupPage {
-  data: any = {};
+  data: any = {password: '', cpassword: '', email: ''};
+  
   constructor(public navCtrl: NavController, public dataProvider:DataProvider, public viewCtrl: ViewController, public modalCtrl: ModalController, public navParams: NavParams) {
   }
 
@@ -23,9 +24,7 @@ export class SignupPage {
   }
 
   openOTPPage(){ 
-
     this.navCtrl.setRoot(OtpPage, {data: this.data});
- 
   }
 
   sendOTP(){

@@ -116,8 +116,8 @@ export class JobDetailsPage {
   hasApplied(){ 
     this.dataProvider.loadAppliedJobs().then(res => {
       this.jobsApplied = res;
-      this.countAppliedUsers(res);
-      res.forEach(aJob => {
+      this.countAppliedUsers(this.jobsApplied);
+      this.jobsApplied.forEach(aJob => {
         if(aJob.job_id_fk == this.job.job_id && this.profile.user_id == aJob.user_id_fk){
           this.applied = true;
           console.log("You applied for "+ this.job.title);
