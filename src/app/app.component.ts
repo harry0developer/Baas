@@ -55,7 +55,7 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.profile = JSON.parse(localStorage.getItem('user'));
-      this.dataProvider.getLocation();
+      // this.dataProvider.getLocation();
       this.uploads = this.dataProvider.getMediaLink();
       
     });

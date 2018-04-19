@@ -17,7 +17,7 @@
         #email="ngModel" placeholder="&#xf0e0; Email address" style="font-family:SansCaption, FontAwesome"></ion-input>
       </ion-item>
       <div class="form-validation">
-        <div *ngIf="email.errors && (email.dirty || email.touched)">
+        <div *ngIf="email?.errors && (email.dirty || email.touched)">
           <p *ngIf="email?.errors.required">Email is required</p>
           <p *ngIf="email?.errors.pattern">Invalid email address</p>
         </div>

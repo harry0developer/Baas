@@ -9,8 +9,6 @@ import { LoginPage } from '../login/login';
 })
 export class ForgotPasswordPage {
   data: any = {email:''};
-  @ViewChild('forgotPasswordForm') forgotPasswordForm: any;
-  
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

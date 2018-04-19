@@ -11,9 +11,9 @@ import { AutocompletePage } from '../autocomplete/autocomplete';
 export class PostJobsPage {
   data:any;
   categories: any;  
-  skills: any;
   address;
   profile: any;
+  skills: any = [];
   constructor(public navCtrl: NavController,private dataProvider: DataProvider, public viewCtrl: ViewController,
     public modalCtrl: ModalController, public navParams: NavParams) {
     this.data = {};  
@@ -29,12 +29,12 @@ export class PostJobsPage {
  
   dismiss(){
     this.viewCtrl.dismiss();
-  } 
-
-  selectedCategory(cat){
-    this.categories.forEach(cate => {
-      if(cate.name == cat){
-        this.skills = cate.skills;
+  }  
+  selectedCategory(cat) {
+    console.log(cat);
+    this.categories.map(category => {
+      if(category.name == cat){
+        this.data.skills = category.skills;
       }
     });
   }
