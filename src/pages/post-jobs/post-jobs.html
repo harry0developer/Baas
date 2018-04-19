@@ -46,7 +46,7 @@
             <ion-item>
               <ion-label floating>Skills</ion-label>
               <ion-select name="skills"  #skills="ngModel" required [(ngModel)]="data.skills" multiple="true">
-                <ion-option *ngFor="let skill of data.skills">{{skill}}</ion-option>
+                <ion-option *ngFor="let skill of s.skills">{{skill}}</ion-option>
               </ion-select>
             </ion-item>
             <div class="form-validation">

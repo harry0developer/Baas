@@ -13,7 +13,7 @@ export class PostJobsPage {
   categories: any;  
   address;
   profile: any;
-  skills: any = [];
+  s = {skills: []};
   constructor(public navCtrl: NavController,private dataProvider: DataProvider, public viewCtrl: ViewController,
     public modalCtrl: ModalController, public navParams: NavParams) {
     this.data = {};  
@@ -31,10 +31,9 @@ export class PostJobsPage {
     this.viewCtrl.dismiss();
   }  
   selectedCategory(cat) {
-    console.log(cat);
     this.categories.map(category => {
       if(category.name == cat){
-        this.data.skills = category.skills;
+        this.s.skills = category.skills;
       }
     });
   }
@@ -44,7 +43,7 @@ export class PostJobsPage {
     let res;  
  
     if(this.data && this.data.skills ){
-      this.data.skills = this.data.skills.toString();
+      this.data.skills = this.s.skills.toString();
     }
     this.data.date_created = this.dataProvider.getDate();
     this.data.user_id = this.profile.user_id;
