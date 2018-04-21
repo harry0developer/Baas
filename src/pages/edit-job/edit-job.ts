@@ -27,56 +27,67 @@ export class EditJobPage {
   address;
   profile: any;
   job: any = {};
+  s = {skills: []};
+  
   
   constructor(public navCtrl: NavController,private dataProvider: DataProvider, public viewCtrl: ViewController,
     public modalCtrl: ModalController, public navParams: NavParams) {
       
     }
     
-    ionViewDidLoad() {
-      this.dataProvider.getCategories().then(res => {
-        this.categories = res;
-      });
-      
-      this.profile = JSON.parse(localStorage.getItem("user"));
-      
-      this.job = this.navParams.get("job");
-      
-      console.log(this.data);
-      this.data = {
-        title: this.job.title,
-        category: this.job.category,
-        skills: this.job.skills.split(","),
-        type: this.job.type,
-        experience: this.job.experience,
-        salary: this.job.salary,
-        frequency: this.job.frequency,
-        address: this.job.address,
-        lat: this.job.lat,
-        lng: this.job.lng,
-        description: this.job.description,
-      };
-      this.skills = this.job.skills.split(',');
+  ionViewDidLoad() {
+    this.job = this.navParams.get("job");
+    this.profile = JSON.parse(localStorage.getItem("user"));
+
+    this.dataProvider.getCategories().then(res => {
+      this.categories = res;
+      this.getSkills(this.job.category, res);
+    });
+    this.data = {
+      title: this.job.title,
+      category: this.job.category,
+      type: this.job.type,
+      experience: this.job.experience,
+      salary: this.job.salary,
+      frequency: this.job.frequency,
+      address: this.job.address,
+      description: this.job.description,
+    };
   }
  
   dismiss(){
     this.viewCtrl.dismiss();
   } 
-
-  selectedCategory(cat){
-    this.categories.forEach(cate => {
-      if(cate.name == cat){
-        this.skills = cate.skills;
+ 
+  getSkills(cat, categories) {
+    console.log(cat, categories);
+    categories.forEach(category => {
+      if(cat === category.name){
+        this.s.skills = category.skills
       }
     });
   }
+
+  selectedCategory(cat) {
+    this.categories.map(category => {
+      if(category.name == cat){
+        this.s.skills = category.skills;
+      }
+    });
+  }
+ 
  
   updateJobDetails(){
     this.dataProvider.presentLoading("Please wait...");
     let res;  
  
+    // if(this.data && this.data.skills ){
+    //   this.data.skills = this.data.skills.toString();
+    // }
+
+     
     if(this.data && this.data.skills ){
-      this.data.skills = this.data.skills.toString();
+      this.data.skills = this.s.skills.toString();
     }
     this.data.date_created = this.dataProvider.getDate();
     this.data.user_id = this.profile.user_id;

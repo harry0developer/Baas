@@ -69,5 +69,8 @@ ion-item-divider.item.item-divider, ion-badge.badge{
   p {
       text-align: center;
       color: $form-error;
+      padding: 10px;
+      border: 1px solid #FFF;
+      margin-top: -3px;
   }
 }

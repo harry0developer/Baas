@@ -30,6 +30,7 @@ export class PostJobsPage {
   dismiss(){
     this.viewCtrl.dismiss();
   }  
+  
   selectedCategory(cat) {
     this.categories.map(category => {
       if(category.name == cat){

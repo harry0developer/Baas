@@ -125,11 +125,11 @@
             <ion-list>
               <ion-item tappable >
                 <ion-label floating>Pick Job Address</ion-label>
-                <ion-input name="address"  #address="ngModel" (ionFocus)="showAddressModal()" minlength="5" [(ngModel)]="data.address" type="text"></ion-input>
+                <ion-input name="address"  #address="ngModel" (ionFocus)="showAddressModal()" required [(ngModel)]="data.address" type="text"></ion-input>
               </ion-item>
               <div class="form-validation">
                 <div *ngIf="address?.errors && (address.dirty || address.touched)">
-                  <p *ngIf="address?.errors.minlength">Address is required</p>
+                  <p *ngIf="address?.errors.required">Address is required</p>
                 </div>
               </div>
             </ion-list> 
