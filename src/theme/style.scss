@@ -1,5 +1,7 @@
 $primary : #e8b911;
 $secondary: #cea619;
+// $primary : #e13838;
+// $secondary: #e13838;
 $dark: #333;
 $white: #fff;
 $grey: #ddd;
@@ -70,7 +72,7 @@ ion-item-divider.item.item-divider, ion-badge.badge{
       text-align: center;
       color: $form-error;
       padding: 10px;
-      border: 1px solid #FFF;
+      // border: 1px solid #FFF;
       margin-top: -3px;
   }
 }

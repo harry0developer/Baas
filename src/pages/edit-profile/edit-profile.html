@@ -11,18 +11,28 @@
 
 <ion-content>
   <ion-list *ngIf="user" padding>
-    <ion-item>
-      <i class="fa fa-phone" item-start></i>
-      <ion-input [(ngModel)]="data.phone" placeholder="Phone number" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <i class="fa fa-map-marker" item-start></i>
-      <ion-input (ionFocus)="showAddressModal()" [(ngModel)]="data.address" placeholder="Home address" type="text"></ion-input>
-    </ion-item>
+    <form novalidate #editProfileForm="ngForm">
+      <ion-item> 
+        <i class="fa fa-phone" item-start></i>
+        <ion-input type="tel" name="phone" [(ngModel)]="data.phone" required pattern="[0-9]{10,15}"
+        #phone="ngModel" placeholder="Phone number"></ion-input>
+      </ion-item>
+      <div class="form-validation">
+        <div *ngIf="phone?.errors && (phone.dirty || phone.touched)">
+          <p *ngIf="phone?.errors.required">Phone number is required</p>
+          <p *ngIf="phone?.errors.pattern">Invalid phone number</p>
+        </div>
+      </div>
+
+      <ion-item>
+        <i class="fa fa-map-marker" item-start></i>
+        <ion-input (ionFocus)="showAddressModal()" name="address" [(ngModel)]="data.address" placeholder="Home address" type="text"></ion-input>
+      </ion-item>
+    </form> 
   </ion-list>
 
   <div padding class="but">
-    <button ion-button color="dark" block (click)="updateDetails()">Update Details</button>
+    <button ion-button color="dark" block [disabled]="editProfileForm?.invalid" (click)="updateDetails()">Update Details</button>
   </div>
  
 </ion-content>

@@ -40,14 +40,31 @@
             <ion-icon name="radio-button-off"></ion-icon>
             <ion-icon name="radio-button-off"></ion-icon>
           </div>
-          <ion-item>
-            <ion-label><i class="fa fa-user" item-start></i>First name</ion-label>
-            <ion-input [(ngModel)]="data.firstname" align="right" type="text"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label><i class="fa fa-user" item-start></i>Last name</ion-label>
-            <ion-input [(ngModel)]="data.lastname" type="text"></ion-input>
-          </ion-item> 
+          <form novalidate #step1="ngForm">
+            <ion-item> 
+              <i class="fa fa-user" item-start></i>
+              <ion-input type="text" name="firstname" [(ngModel)]="data.firstname" required
+              #firstname="ngModel" placeholder="First name"></ion-input>
+            </ion-item>
+            <div class="form-validation">
+              <div *ngIf="firstname?.errors && (firstname.dirty || firstname.touched)">
+                <p *ngIf="firstname?.errors.required">First name is required</p>
+                <p *ngIf="firstname?.errors.pattern">Invalid first name</p>
+              </div>
+            </div>
+      
+            <ion-item> 
+              <i class="fa fa-user" item-start></i>
+              <ion-input type="text" name="lastname" [(ngModel)]="data.lastname" required
+              #lastname="ngModel" placeholder="Last name"></ion-input>
+            </ion-item>
+            <div class="form-validation">
+              <div *ngIf="lastname?.errors && (lastname.dirty || lastname.touched)">
+                <p *ngIf="lastname?.errors.required">Last name is required</p>
+                <p *ngIf="lastname?.errors.pattern">Invalid last name</p>
+              </div>
+            </div>
+          </form> 
 
           <ion-grid>
             <ion-row>
@@ -58,7 +75,7 @@
                 </button>
               </ion-col>
               <ion-col col-6>
-                <button ion-button block color="dark" icon-right round (click)="goNext()">Next
+                <button ion-button block color="dark" icon-right round [disabled]="step1.invalid" (click)="goNext()">Next
                     <ion-icon name="arrow-forward"></ion-icon>
                 </button>
               </ion-col>
@@ -98,7 +115,7 @@
                   </button>
                 </ion-col>
                 <ion-col col-6>
-                  <button ion-button block color="dark" icon-right round (click)="goNext()">Next
+                  <button ion-button block color="dark" icon-right round [disabled]="!data.gender || !data.dob" (click)="goNext()">Next
                       <ion-icon name="arrow-forward"></ion-icon>
                   </button>
                 </ion-col>
@@ -144,7 +161,7 @@
                 </button>
               </ion-col>
               <ion-col col-6>
-                <button ion-button block color="dark" icon-right round (click)="goNext()">Next
+                <button ion-button block color="dark" icon-right round [disabled]="!data.race || !data.nationality" (click)="goNext()">Next
                     <ion-icon name="arrow-forward"></ion-icon>
                 </button>
               </ion-col>
@@ -171,10 +188,23 @@
               </ion-option>
             </ion-select>
           </ion-item> 
-          <ion-item>
+          <form novalidate #phoneForm="ngForm">
+            <ion-item> 
+              <i class="fa fa-phone" item-start></i>
+              <ion-input type="tel" name="phone" placeholder="Phone number" [(ngModel)]="data.phone" required pattern="[0-9]{10,15}"
+              #phone="ngModel"></ion-input>
+            </ion-item>
+            <div class="form-validation">
+              <div *ngIf="phone?.errors && (phone.dirty || phone.touched)">
+                <p *ngIf="phone?.errors.required">Phone number is required</p>
+                <p *ngIf="phone?.errors.pattern">Invalid phone number</p>
+              </div>
+            </div> 
+          </form>
+          <!-- <ion-item>
             <ion-label ><i class="fa fa-phone" item-start></i>Phone Number</ion-label>
             <ion-input [(ngModel)]="data.phone" type="text"></ion-input>
-          </ion-item>        
+          </ion-item>         -->
         
           <ion-grid>
             <ion-row>
@@ -185,7 +215,7 @@
                 </button>
               </ion-col>
               <ion-col col-6>
-                <button ion-button color="dark" block round icon-right (click)="signup()">Complete
+                <button ion-button color="dark" [disabled]="phoneForm?.invalid"  block round icon-right (click)="signup()">Complete
                     <ion-icon name="checkmark"></ion-icon>
                 </button>
               </ion-col>

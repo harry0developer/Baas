@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { SetupPage} from '../setup/setup';
 import { DataProvider } from '../../providers/data/data';
 import { LoginPage } from '../login/login';
 
-@IonicPage()
 @Component({
   selector: 'page-otp',
   templateUrl: 'otp.html',

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { AutocompletePage } from '../autocomplete/autocomplete';
+import { NG_VALIDATORS, FormsModule, ValidatorFn, FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidatorDirective } from '../../directives/validator/validator';
  
-
 @IonicPage()
 @Component({
   selector: 'page-edit-profile',
@@ -14,7 +15,9 @@ export class EditProfilePage {
   user: any; 
   data: any = {phone:"", address:""};
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, 
-    public modalCtrl: ModalController, public navParams: NavParams) {
+    public modalCtrl: ModalController, public navParams: NavParams,
+    private formBuilder: FormBuilder, public validatorDirective: ValidatorDirective) {
+
   }
 
   ionViewDidLoad() { 
